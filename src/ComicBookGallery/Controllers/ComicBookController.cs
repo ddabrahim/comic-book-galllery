@@ -10,6 +10,24 @@ namespace ComicBookGallery.Controllers
     {
         public ActionResult Detail() //actionresult is the base result type used by both RedirectResult and ContentResult
         {
+            
+            
+            //prepare data to be passed to the Detail view
+            ViewBag.SeriesTitle = "The Amazing Spider-Man";
+            ViewBag.IssueTitle = 700;
+            ViewBag.Description = "<p>Final issue</>";
+            ViewBag.Artists = new string[]
+            {
+                "Script: Dan Slott",
+                "Pencils: Humberto Ramos",
+                "Inks: Victor Olazaba",
+                "Colors: Edgar Delgado",
+                "Letters: Chris Eliopoulos"
+            };
+
+            //switch to the Detail view
+            return View();
+
             /*//if the day is tuesday, redirect to an other page
             if (DateTime.Today.DayOfWeek == DayOfWeek.Tuesday)
             {
@@ -17,9 +35,6 @@ namespace ComicBookGallery.Controllers
                 return Redirect("/");
             }
             */
-
-            //return detail View,
-            return View();
 
 
             //return Content("Hello");
