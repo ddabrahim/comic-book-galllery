@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComicBookGallery.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,23 +11,26 @@ namespace ComicBookGallery.Controllers
     {
         public ActionResult Detail() //actionresult is the base result type used by both RedirectResult and ContentResult
         {
-            
-            
-            //prepare data to be passed to the Detail view
-            ViewBag.SeriesTitle = "The Amazing Spider-Man";
-            ViewBag.IssueTitle = 700;
-            ViewBag.Description = "<p>Final issue</>";
-            ViewBag.Artists = new string[]
+
+            //instantiate the comicbook model
+            var comicBook = new ComicBook()
             {
-                "Script: Dan Slott",
-                "Pencils: Humberto Ramos",
-                "Inks: Victor Olazaba",
-                "Colors: Edgar Delgado",
-                "Letters: Chris Eliopoulos"
+                //prepare data to be passed to the Detail view
+                SeriesTitle = "The Amazing Spider-Man",
+                IssueNumber = 700,
+                DescriptionHtml = "<p>Final issue</>",
+                Artists = new Artist[]
+                {
+                    new Artist() {Name= "Dan Sloww", Role="Script" },
+                    new Artist() {Name= "Humberto Ramos", Role="Pencils" },
+                    new Artist() {Name= "Victor Olazaba", Role="Inks" },
+                    new Artist() {Name= "Edgar Delgado", Role="Colors" },
+                    new Artist() {Name= "Chris Eliopoulos", Role="Letters" },
+                }
             };
 
-            //switch to the Detail view
-            return View();
+            //switch to the Detail view nad pass the comicBook model to the view
+            return View(comicBook);
 
             /*//if the day is tuesday, redirect to an other page
             if (DateTime.Today.DayOfWeek == DayOfWeek.Tuesday)
