@@ -1,4 +1,5 @@
-﻿using ComicBookGallery.Models;
+﻿using ComicBookGallery.Data;
+using ComicBookGallery.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +10,23 @@ namespace ComicBookGallery.Controllers
 {
     public class ComicBookController : Controller
     {
-        public ActionResult Detail() //actionresult is the base result type used by both RedirectResult and ContentResult
+        private ComicBookRepository _comicBookRepository = null;
+
+        public ComicBookController()
+        {
+            _comicBookRepository = new ComicBookRepository();
+        }
+
+        public ActionResult Detail(int? Id) //actionresult is the base result type used by both RedirectResult and ContentResult
         {
 
-            //instantiate the comicbook model
-            var comicBook = new ComicBook()
+            if (Id == null)
             {
-                //prepare data to be passed to the Detail view
-                SeriesTitle = "The Amazing Spider-Man",
-                IssueNumber = 700,
-                DescriptionHtml = "<p>Final issue</>",
-                Artists = new Artist[]
-                {
-                    new Artist() {Name= "Dan Sloww", Role="Script" },
-                    new Artist() {Name= "Humberto Ramos", Role="Pencils" },
-                    new Artist() {Name= "Victor Olazaba", Role="Inks" },
-                    new Artist() {Name= "Edgar Delgado", Role="Colors" },
-                    new Artist() {Name= "Chris Eliopoulos", Role="Letters" },
-                }
-            };
+                return HttpNotFound();
+            }
+
+            //instantiate the comicbook model
+            var comicBook = _comicBookRepository.GetComicBook((int)Id);
 
             //switch to the Detail view nad pass the comicBook model to the view
             return View(comicBook);
